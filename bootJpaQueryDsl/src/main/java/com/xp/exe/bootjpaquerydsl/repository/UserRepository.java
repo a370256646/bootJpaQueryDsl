@@ -10,6 +10,6 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
  * @date: 2023年06月07日
  * @version: 1.0.0
  */
-public interface UserRepository extends JpaRepository<User,Long>,QuerydslPredicateExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredicateExecutor<User> {
 
 }

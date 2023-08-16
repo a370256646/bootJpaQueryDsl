@@ -29,11 +29,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "员工controller")
 public class EmployeeController {
 
-    private EmployeeServiceImpl employeeService;
+    private final EmployeeServiceImpl employeeService;
 
-    /**
-     * @description: 构造器注入
-     */
     public EmployeeController(EmployeeServiceImpl employeeServiceImpl) {
         this.employeeService = employeeServiceImpl;
     }

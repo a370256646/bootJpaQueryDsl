@@ -2,7 +2,6 @@ package com.xp.exe.bootjpaquerydsl.service;
 
 import com.xp.exe.bootjpaquerydsl.common.BasePageRequest;
 import com.xp.exe.bootjpaquerydsl.model.Company;
-import com.xp.exe.bootjpaquerydsl.model.Employee;
 import com.xp.exe.bootjpaquerydsl.model.PageObject;
 
 /**
@@ -16,7 +15,7 @@ public interface ICompanyService {
 
     Company getOneById(Long cmpId);
 
-    int addOne(Company company);
+    Company addOne(Company company);
 
     int delOne(Long cmpId);
 

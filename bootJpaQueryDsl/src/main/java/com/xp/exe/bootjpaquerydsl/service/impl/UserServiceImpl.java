@@ -12,11 +12,12 @@ import com.xp.exe.bootjpaquerydsl.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * @description: TODO
+ * @description: user业务逻辑提供层
  * @author: coderXp
  * @date: 2023年06月06日
  * @version: 1.0.0
@@ -99,10 +100,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int addOne(User user) {
+    public User addOne(User user) {
         // 针对新增方法来说jpa的新增更具有优势
-        System.out.println(userRepository.save(user));
-        return 1;
+        return userRepository.save(user);
     }
 
     @Override
@@ -118,6 +118,8 @@ public class UserServiceImpl implements UserService {
                 .set(Q_USER.age, user.getAge())
                 .set(Q_USER.sex, user.getSex())
                 .set(Q_USER.userDesc, user.getUserDesc())
+                // 更新日期维护
+                .set(Q_USER.updatedAt, LocalDateTime.now())
                 .where(Q_USER.id.eq(user.getId()))
                 .execute();
     }

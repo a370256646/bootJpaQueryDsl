@@ -1,12 +1,13 @@
 package com.xp.exe.bootjpaquerydsl.model;
 
 import com.xp.exe.bootjpaquerydsl.common.BaseEntity;
+import com.xp.exe.bootjpaquerydsl.common.groups.AddGroup;
+import com.xp.exe.bootjpaquerydsl.common.groups.UpdateGroup;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,15 +28,15 @@ public class Company extends BaseEntity {
 
     @Column(length = 20)
     @Schema(description = "公司名称")
-    @NotBlank(message = "请输入公司名称")
-    private String companyName;
+    @NotBlank(message = "请输入公司名称",groups = {AddGroup.class, UpdateGroup.class})
+    private String cmpName;
 
     @Column(length = 200)
     @Schema(description = "公司简介")
-    @NotBlank(message = "请输入公司简介信息")
-    private String empIntroduce;
+    @NotBlank(message = "请输入公司简介信息",groups = {AddGroup.class,UpdateGroup.class})
+    private String cmpIntroduce;
 
     @Column(length = 200)
     @Schema(description = "公司描述")
-    private String empDesc;
+    private String cmpDesc;
 }

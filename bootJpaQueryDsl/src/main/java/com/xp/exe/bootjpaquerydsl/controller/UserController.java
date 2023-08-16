@@ -68,12 +68,12 @@ public class UserController {
             @Parameter(in = ParameterIn.QUERY, name = "userSex", description = "用户性别,可选"),
     })
     public BaseResultData<PageObject<User>> getUserByCondition(@RequestParam(value = "pageSize", defaultValue = "15") Long pageSize,
-                                                   @RequestParam(value = "pageNum", defaultValue = "1") Long pageNum,
-                                                   @RequestParam(value = "userId", required = false) Long userId,
-                                                   @RequestParam(value = "userName", required = false) String userName,
-                                                   @RequestParam(value = "userDesc", required = false) String userDesc,
-                                                   @RequestParam(value = "userAge", required = false) Long userAge,
-                                                   @RequestParam(value = "userSex", required = false) Long userSex) {
+                                                               @RequestParam(value = "pageNum", defaultValue = "1") Long pageNum,
+                                                               @RequestParam(value = "userId", required = false) Long userId,
+                                                               @RequestParam(value = "userName", required = false) String userName,
+                                                               @RequestParam(value = "userDesc", required = false) String userDesc,
+                                                               @RequestParam(value = "userAge", required = false) Long userAge,
+                                                               @RequestParam(value = "userSex", required = false) Long userSex) {
         BasePageRequest basePageRequest = new BasePageRequest(pageNum, pageSize);
         HashMap<String, Object> reqParamMap = basePageRequest.getRequestParamsMap();
         reqParamMap.put("userId", userId);
@@ -89,9 +89,8 @@ public class UserController {
     @Parameters({
             @Parameter(name = "user", description = "要新增的用户jsonBody体内容")
     })
-    public BaseResultData<String> addUser(@RequestBody @Validated({AddGroup.class}) User user) {
-        userService.addOne(user);
-        return BaseResultData.success();
+    public BaseResultData<User> addUser(@RequestBody @Validated({AddGroup.class}) User user) {
+        return BaseResultData.success(userService.addOne(user));
     }
 
     @PostMapping("delUser")
@@ -116,6 +115,17 @@ public class UserController {
     public BaseResultData<String> delUser(@RequestBody @Validated({UpdateGroup.class}) User user) {
         userService.updateOne(user);
         return BaseResultData.success();
+    }
+
+    @PostMapping("getAllUserInfo")
+    @Operation(summary = "获取全体可用的用户数据以及对应的员工和公司数据(联表)", description = "获取全体可用的用户数据以及对应的员工和公司数据(联表)")
+    @Parameters({
+            @Parameter(in = ParameterIn.QUERY, name = "pageNum", description = "页码"),
+            @Parameter(in = ParameterIn.QUERY, name = "pageSize", description = "每页展示数据量")
+    })
+    public BaseResultData<PageObject<User>> getAllUserInfo(@RequestParam(value = "pageNum", defaultValue = "1") Long pageNum,
+                                                       @RequestParam(value = "pageSize", defaultValue = "15") Long pageSize) {
+        return BaseResultData.success(userService.getAllUser(new BasePageRequest(pageNum, pageSize)));
     }
 
 }

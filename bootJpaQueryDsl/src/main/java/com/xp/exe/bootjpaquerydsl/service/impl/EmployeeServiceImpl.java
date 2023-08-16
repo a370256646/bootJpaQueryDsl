@@ -10,10 +10,11 @@ import com.xp.exe.bootjpaquerydsl.repository.EmployeeRepository;
 import com.xp.exe.bootjpaquerydsl.service.IEmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @description: TODO
+ * @description: employee业务逻辑提供层
  * @author: coderXp
  * @date: 2023年08月16日
  * @version: 1.0.0
@@ -72,10 +73,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public int updateOne(Employee employee) {
         return (int) queryFactory.update(Q_EMPLOYEE)
-                .set(Q_EMPLOYEE.empName,employee.getEmpName())
-                .set()
+                .set(Q_EMPLOYEE.empName, employee.getEmpName())
+                .set(Q_EMPLOYEE.empDesc, employee.getEmpDesc())
+                .set(Q_EMPLOYEE.workYear, employee.getWorkYear())
+                // 更新日期维护
+                .set(Q_EMPLOYEE.updatedAt, LocalDateTime.now())
                 .where(Q_EMPLOYEE.id.eq(employee.getId()))
                 .execute();
     }
-
 }

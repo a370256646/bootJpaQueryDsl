@@ -81,7 +81,7 @@ public class BaseEntity {
     }
 
     /**
-     * @description: 更新操作前做的事
+     * @description: 更新操作前做的事,该注解只有用Repository的save方法使用时才会有效,在更新时尽量还是手动维护时间
      */
     @PreUpdate
     public void preUpdate() {
