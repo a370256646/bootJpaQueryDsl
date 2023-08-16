@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 父项目/依赖项目/不支持启动的项目 打包方式为pom -->
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.xp.base</groupId>
+    <artifactId>BaseBootProj</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>BaseBootProj</name>
+    <description>BaseBootProj</description>
+    <properties>
+        <java.version>20</java.version>
+        <boot.admin.version>3.0.0</boot.admin.version>
+        <boot.client.version>3.0.0</boot.client.version>
+        <spring.doc.version>2.1.0</spring.doc.version>
+        <dynamic.datasource.version>3.5.2</dynamic.datasource.version>
+        <query.dsl.version>5.0.0</query.dsl.version>
+        <log4jdbc.version>1.16</log4jdbc.version>
+        <generated.path>target/generated-sources/java</generated.path>
+        <apt.maven.version>1.1.3</apt.maven.version>
+    </properties>
+
+    <!-- 默认依赖区域,该区域内定义的pom会被子项目自动继承不需要再次声明 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- spring boot devtools 热部署 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <!-- 声明式依赖区域,该区域下的pom会被子项目声明式使用,不需要声明对应版本以父pom为准 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- spring boot admin Server日志监控 -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${boot.admin.version}</version>
+            </dependency>
+
+            <!-- spring boot admin client日志监控 -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${boot.client.version}</version>
+            </dependency>
+
+            <!-- spring doc依赖包 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${spring.doc.version}</version>
+            </dependency>
+
+            <!-- 动态数据源 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic.datasource.version}</version>
+            </dependency>
+
+            <!-- 集成querydsl -->
+<!--            <dependency>-->
+<!--                <groupId>com.querydsl</groupId>-->
+<!--                <artifactId>querydsl-jpa</artifactId>-->
+<!--                <classifier>jakarta</classifier>-->
+<!--                <version>${query.dsl.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.querydsl</groupId>-->
+<!--                <artifactId>querydsl-apt</artifactId>-->
+<!--                <scope>provided</scope>-->
+<!--                <classifier>jakarta</classifier>-->
+<!--                <version>${query.dsl.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- 监控sql日志 -->
+<!--            <dependency>-->
+<!--                <groupId>org.bgee.log4jdbc-log4j2</groupId>-->
+<!--                <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>-->
+<!--                <version>${log4jdbc.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- mysql连接驱动 -->
+<!--            <dependency>-->
+<!--                <groupId>com.mysql</groupId>-->
+<!--                <artifactId>mysql-connector-j</artifactId>-->
+<!--                <scope>runtime</scope>-->
+<!--                <version>8.0.33</version>-->
+<!--            </dependency>-->
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 父项目/依赖项目/不支持启动的项目 打包方式为pom -->
+    <groupId>com.xp.exe</groupId>
+    <artifactId>baseProj</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>BaseProj</name>
+    <description>BaseProj</description>
+
+    <!-- 子模块声明 注意按照从上到下的打包顺序,如果被其它项目依赖的要放上面优先打包 -->
+    <modules>
+        <module>BaseBootProj</module>
+        <module>bootJpaQueryDsl</module>
+        <module>BootAdminServer</module>
+    </modules>
+
+</project>

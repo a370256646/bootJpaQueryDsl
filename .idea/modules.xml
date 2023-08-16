@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BaseBootProj/BaseBootProj.iml" filepath="$PROJECT_DIR$/BaseBootProj/BaseBootProj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BootAdminServer/BootAdminServer.iml" filepath="$PROJECT_DIR$/BootAdminServer/BootAdminServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bootJpaQueryDsl/bootJpaQueryDsl.iml" filepath="$PROJECT_DIR$/bootJpaQueryDsl/bootJpaQueryDsl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bootJpaQueryDslProj.iml" filepath="$PROJECT_DIR$/.idea/bootJpaQueryDslProj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaTest/javaTest.iml" filepath="$PROJECT_DIR$/javaTest/javaTest.iml" />
+    </modules>
+  </component>
+</project>

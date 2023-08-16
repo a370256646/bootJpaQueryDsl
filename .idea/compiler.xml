@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bootJpaQueryDsl" />
+        <module name="BootAdminServer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="BaseBootProj" target="20" />
+      <module name="BootAdminServer" target="20" />
+      <module name="bootJpaQueryDsl" target="20" />
+      <module name="bootJpaQueryDslProj" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="BaseBootProj" options="" />
+      <module name="BootAdminServer" options="-parameters" />
+      <module name="bootJpaQueryDsl" options="-parameters" />
+    </option>
+  </component>
+</project>

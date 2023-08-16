@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<!--
+ | This is the configuration file for Maven. It can be specified at two levels:
+ |
+ |  1. User Level. This settings.xml file provides configuration for a single user,
+ |                 and is normally provided in ${user.home}/.m2/settings.xml.
+ |
+ |                 NOTE: This location can be overridden with the CLI option:
+ |
+ |                 -s /path/to/user/settings.xml
+ |
+ |  2. Global Level. This settings.xml file provides configuration for all Maven
+ |                 users on a machine (assuming they're all using the same Maven
+ |                 installation). It's normally provided in
+ |                 ${maven.conf}/settings.xml.
+ |
+ |                 NOTE: This location can be overridden with the CLI option:
+ |
+ |                 -gs /path/to/global/settings.xml
+ |
+ | The sections in this sample file are intended to give you a running start at
+ | getting the most out of your Maven installation. Where appropriate, the default
+ | values (values used when the setting is not specified) are provided.
+ |
+ |-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
+    <!-- 本地仓库路径 -->
+    <localRepository>
+        <!-- ${user.home}/.m2/repository -->
+    </localRepository>
+
+    <!-- 当插件的组织id(groupId)没有显示提供时,提供如下的id列表 -->
+    <pluginGroups>
+        <!-- <pluginGroup>com.xp.exe</pluginGroup> -->
+    </pluginGroups>
+
+
+    <!-- 配置服务端的一些设置,如安全证书等 -->
+    <servers>
+        <!--
+        serverId定义
+        <id>server001</id>
+        鉴权用户名
+        <username>admin</username>
+        鉴权密码
+        <password>123456</password>
+        鉴权时使用的私钥的位置
+        <privateKey>${user.home}/.ssh/id.dsa</privateKey>
+        鉴权时提供的私钥密码
+        <passphrase>some_passphrase</passphrase>
+        文件夹权限
+        <filePermissions>664</filePermissions>
+        目录的权限
+        <directoryPermissions>775</directoryPermissions>
+        -->
+    </servers>
+
+    <!-- 为仓库列表配置下载镜像列表 -->
+    <mirrors>
+        <!--
+        <mirror>
+            在下面可以配置多个mirror,但是有且仅有第一个生效,只有当第一个无法访问时才会往下找第二个、第三个以此类推
+            镜像唯一标识
+            <id>aLiYunMaven</id>
+            镜像的服务器ID,*为所有
+            <mirrorOf>*</mirrorOf>
+            镜像名称
+            <name>public</name>
+            镜像的url
+            <url>https://maven.aliyun.com/repository/public</url>
+        </mirror>
+        -->
+    </mirrors>
+
+    <!-- 配置代理信息 -->
+    <proxies>
+    </proxies>
+
+    <!-- 指定不同的配置文件 -->
+    <profiles>
+        <!-- 多远程仓库配置 -->
+        <profile>
+            <id>aLiYunPublicRepository</id>
+            <repositories>
+                <repository>
+                    <!-- 镜像唯一标识-->
+                    <id>aLiYunPublicMaven</id>
+                    <!-- 镜像的url-->
+                    <url>https://maven.aliyun.com/repository/public</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>aLiYunCentralRepository</id>
+            <repositories>
+                <repository>
+                    <!-- 镜像唯一标识-->
+                    <id>aLiYunCentralMaven</id>
+                    <!-- 镜像的url-->
+                    <url>https://maven.aliyun.com/repository/central</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>defaultMavenRepository</id>
+            <repositories>
+                <repository>
+                    <!-- 镜像唯一标识-->
+                    <id>defaultMaven</id>
+                    <!-- 镜像的url-->
+                    <url>https://repo1.maven.org/maven2/</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+    <!-- 指定激活生效的profiles文件内容 -->
+    <activeProfiles>
+        <activeProfile>aLiYunPublicRepository</activeProfile>
+        <activeProfile>aLiYunCentralRepository</activeProfile>
+        <activeProfile>defaultMavenRepository</activeProfile>
+    </activeProfiles>
+</settings>

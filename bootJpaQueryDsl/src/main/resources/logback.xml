@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!-- 从application.yml 中注入变量,包括日志名称,路径等  -->
+    <springProperty scope="context" name="LOG_PATH" source="custom.info.logPath"/>
+    <springProperty scope="context" name="LOG_DIR" source="custom.info.appDir"/>
+    <springProperty scope="context" name="LOG_FILE_NAME" source="custom.info.logFileName"/>
+
+    <!-- 控制台输出内容 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>1-%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 控制台输出内容 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+        </encoder>
+        <!-- 自定义日志过滤 -->
+        <filter class="com.xp.exe.bootjpaquerydsl.config.MyLogFilter"/>
+    </appender>
+
+    <!-- warn级别日志单独输出成文件 -->
+    <appender name="FILE_WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_DIR}/log_warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_DIR}/warn/log-warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- info级别以上日志输出成一个文件,包含info和error的信息 -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_DIR}/${LOG_FILE_NAME}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_DIR}/info/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <!-- 临界值过滤器,用于从某个临界值起进行过滤而不是只针对某个值过滤 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- info及以上的内容会被纳入 -->
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 自定义日志过滤 -->
+        <filter class="com.xp.exe.bootjpaquerydsl.config.MyLogFilter"/>
+    </appender>
+
+    <!-- error级别日志单独输出成文件 -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_DIR}/log_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_DIR}/error/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--设置为OFF,即屏蔽; 留下sqltiming作为INFO级别输出-->
+    <logger name="jdbc.connection" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="OFF"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="INFO"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
+
+    <!--设置日志打印级别为INFO-->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_INFO"/>
+        <appender-ref ref="FILE_WARN"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </root>
+</configuration>

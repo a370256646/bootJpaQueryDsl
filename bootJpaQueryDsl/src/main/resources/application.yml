@@ -1,0 +1,97 @@
+# 端口号信息
+server:
+  port: 9092
+spring:
+  # spring boot admin server注册地址
+  boot:
+    admin:
+      client:
+        url: http://localhost:9091
+        instance:
+          # boot admin 服务跳转地址,手动指向swagger页面
+          service-url: http://localhost:9092/swagger-ui/index.html
+          # 注册服务名称
+          name: boot jpa queryDls app
+          # 健康检查页面,也设置为swagger页面否则访问404,当然也可以在项目中单独指定某一个页面用作健康检查
+          health-url: http://localhost:9092/swagger-ui/index.html
+          # 管理页面基础前缀,一般用作日志actuator访问控制
+          management_base_url: http://localhost:9092/
+
+  datasource:
+    # 默认配置
+#    driver-class-name: com.mysql.jdbc.Driver
+    #    url: jdbc:mysql://localhost:3306/test_db_new?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    # 使用log4jdbc后的配置
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://localhost:3306/test_db_new?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+  # 热部署配置
+  devtools:
+    livereload:
+      # 禁用liveReload服务,如果项目中有页面资源建议开启这个服务
+      enabled: false
+    restart:
+      # 配置热部署,将xml文件内容改动也纳入热部署重启监控范围内
+      additional-paths: dao/**
+      enabled: true
+  # jpa配置
+  jpa:
+    hibernate:
+      # 默认每次加载项目时更新表结构
+      ddl-auto: update
+      # 指定实体属性和表字段命名的关联关系
+      naming:
+        # 驼峰命名自动转换为下划线,如userId自动转换为user_id
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        # 等同于defaultNamingStrategy,根据实体上的@table @column定义映射,若没有设置则直接以实体属性进行映射
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    # 打印生成的sql,开发打开,生产关闭,默认为false
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+# 日志输出级别
+logging:
+  level:
+    com.xp.exe.bootjpaquerydsl: debug
+  file:
+    # 日志文件名称
+    name: ${custom.info.logPath}/${custom.info.appDir}/${custom.info.logFileName}
+    path: ${custom.info.logPath}/${custom.info.appDir}
+  logback:
+    rollingpolicy:
+      # 日志文件大小限制1024*1024大小
+      max-file-size: 1048576
+      # 最大日志文件保留限制
+      max-history: 100
+      # 最大日志文件保留大小
+      total-size-cap: 1048576
+  config: classpath:logback.xml
+# 日志监控断点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+springdoc:
+  # 指定spring doc扫码配置controller的路径
+  packages-to-scan: com.xp.exe.bootjpaquerydsl.controller
+  swagger-ui:
+    # 默认swagger ui为开启,可以在不同的yml中进行个性化配置
+    enabled: true
+    # 禁止默认路径
+    disable-swagger-default-url: true
+
+# 自定义内容区域
+custom:
+  info:
+    # 日志文件根路径地址
+    logPath: D:\adminLog
+    # 日志文件夹名称
+    appDir: graceLogs
+    # 日志文件名称
+    logFileName: log_info.log
